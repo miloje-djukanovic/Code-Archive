@@ -1,0 +1,116 @@
+#include&#x3C;stdio.h&#x3E;
+#include&#x3C;limits.h&#x3E;
+#define MAX 10
+
+void _merge( int a[], int start, int mid, int end )
+{
+&#x9;int A[MAX], B[MAX];
+&#x9;int n_a = mid - start + 1;
+&#x9;int n_b = end - mid;
+
+&#x9;for( int i = 0; i &#x3C; n_a; i ++ )
+&#x9;{
+&#x9;&#x9;A[i] = a[start + i];
+&#x9;}
+&#x9;for( int i = 0; i &#x3C; n_b; i ++ )
+&#x9;{
+&#x9;&#x9;B[i] = a[mid + 1 + i];
+&#x9;}
+
+&#x9;int i_a = 0, i_b = 0;
+&#x9;int is_a_empty = 0;
+&#x9;int is_b_empty = 0;
+&#x9;for( int i = start; i &#x3C;= end; i ++ )
+&#x9;{
+
+&#x9;&#x9;if( is_a_empty )
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;a[i] = B[i_b];
+&#x9;&#x9;&#x9;i_b ++;
+&#x9;&#x9;}
+&#x9;&#x9;else if( is_b_empty )
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;a[i] = A[i_a];
+&#x9;&#x9;&#x9;i_a ++;
+&#x9;&#x9;}
+&#x9;&#x9;else
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;if( A[i_b] &#x3E;= B[i_b] )
+&#x9;&#x9;&#x9;{
+&#x9;&#x9;&#x9;&#x9;a[i] = A[i_a];
+&#x9;&#x9;&#x9;&#x9;i_a ++;
+&#x9;&#x9;&#x9;&#x9;is_a_empty = i_a == n_a;
+&#x9;&#x9;&#x9;}
+&#x9;&#x9;&#x9;else
+&#x9;&#x9;&#x9;{
+&#x9;&#x9;&#x9;&#x9;a[i] = B[i_b];
+&#x9;&#x9;&#x9;&#x9;i_b ++;
+&#x9;&#x9;&#x9;&#x9;is_b_empty = i_b == n_b;
+&#x9;&#x9;&#x9;}
+&#x9;&#x9;}
+&#x9;}
+}
+
+void merge( int a[], int start, int mid, int end )
+{
+
+&#x9;int A[MAX], B[MAX];
+&#x9;int n1 = mid - start + 1;
+&#x9;int n2 = end - mid;
+
+&#x9;for( int i = 0; i &#x3C; n1; i ++ )
+&#x9;{
+&#x9;&#x9;A[i] = a[start + i];
+&#x9;}
+&#x9;for( int i = 0; i &#x3C; n2; i ++ )
+&#x9;{
+&#x9;&#x9;B[i] = a[mid + 1 + i];
+&#x9;}
+
+&#x9;A[n1] = INT_MIN;
+&#x9;B[n2] = INT_MIN;
+
+&#x9;n1 = 0; n2 = 0;
+&#x9;for( int i = start; i &#x3C;= end; i ++ )
+&#x9;{
+&#x9;&#x9;if( A[n1] &#x3E;= B[n2] )
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;a[i] = A[n1];
+&#x9;&#x9;&#x9;n1 ++;
+&#x9;&#x9;}
+&#x9;&#x9;else
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;a[i] = B[n2];
+&#x9;&#x9;&#x9;n2 ++;
+&#x9;&#x9;}
+&#x9;}
+}
+
+void sort( int a[], int start, int end )
+{
+&#x9;if( end &#x3E; start )
+&#x9;{
+&#x9;&#x9;int mid = start + (end - start) / 2;
+&#x9;&#x9;sort( a, start, mid );
+&#x9;&#x9;sort( a, mid + 1, end );
+&#x9;&#x9;_merge(a, start, mid, end );
+&#x9;}
+}
+
+int main()
+{
+&#x9;int n, a[MAX];
+&#x9;scanf( &#x22%d&#x22, &#x26;n );
+
+&#x9;for( int i = 0; i &#x3C; n; i ++ )
+&#x9;{
+&#x9;&#x9;scanf( &#x22%d&#x22, &#x26;a[i] );
+&#x9;}
+
+&#x9;sort( a, 0, n - 1 );
+
+&#x9;for( int i = 0; i &#x3C; n; i ++ )
+&#x9;{
+&#x9;&#x9;printf( &#x22%d &#x22, a[i] );
+&#x9;}
+}

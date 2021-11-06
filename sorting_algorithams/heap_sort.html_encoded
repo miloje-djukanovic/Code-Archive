@@ -1,0 +1,73 @@
+#include&#x3C;stdio.h&#x3E;
+#define MAX 10
+
+void swap( int&#x26; a, int&#x26; b )
+{
+&#x9;int temp = a;
+&#x9;a = b;
+&#x9;b = temp;
+}
+
+void heapify( int A[], int n, int parent )
+{
+&#x9;int left = 2 * parent;
+&#x9;int right = left + 1;
+&#x9;int largest = parent;
+
+&#x9;if( left &#x3C; n &#x26;&#x26; A[left] &#x3E; A[largest] )
+&#x9;{
+&#x9;&#x9;largest = left;
+&#x9;}
+
+&#x9;if( right &#x3C; n &#x26;&#x26; A[right] &#x3E; A[largest] )
+&#x9;{
+&#x9;&#x9;largest = right;
+&#x9;}
+
+&#x9;if(parent != largest)
+&#x9;{
+&#x9;&#x9;swap(A[parent], A[largest]);
+&#x9;&#x9;heapify( A, n, largest );
+&#x9;}
+}
+
+void sort( int A[], int n )
+{
+&#x9;for( int i = n / 2; i &#x3E;= 0; i -- )
+&#x9;{
+&#x9;&#x9;heapify( A, n, i );
+&#x9;}
+
+&#x9;for( int i = n - 1; i &#x3E; 0; i -- )
+&#x9;{
+&#x9;&#x9;swap( A[0], A[i] );
+&#x9;&#x9;heapify( A, i, 0 );
+&#x9;}
+}
+
+int main()
+{
+&#x9;while(1)
+&#x9;{
+&#x9;&#x9;printf( &#x22Unesi duzinu niza:\n&#x22 );
+&#x9;&#x9;int n;
+&#x9;&#x9;scanf( &#x22%d&#x22, &#x26;n );
+
+&#x9;&#x9;int A[MAX];
+&#x9;&#x9;printf( &#x22Unesi niz:\n&#x22 );
+&#x9;&#x9;for( int i = 0; i &#x3C; n; i ++ )
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;scanf( &#x22%d&#x22, &#x26;A[i] );
+&#x9;&#x9;}
+
+&#x9;&#x9;sort( A, n );
+
+&#x9;&#x9;printf( &#x22Soritrani niz:\n&#x22 );
+&#x9;&#x9;for( int i = 0; i &#x3C; n; i ++ )
+&#x9;&#x9;{
+&#x9;&#x9;&#x9;printf( &#x22%d &#x22, A[i] );
+&#x9;&#x9;}
+
+&#x9;&#x9;printf( &#x22\n&#x22 );
+&#x9;}
+}
