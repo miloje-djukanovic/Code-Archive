@@ -5,6 +5,7 @@ void html_encode( FILE *code, FILE *index )
 {
 	fputs( "<pre><code>\n", index );
 
+	char c;
 	while( ( c = getc( code ) ) != EOF )
 	{
 		switch( c )
@@ -33,6 +34,4 @@ void html_encode( FILE *code, FILE *index )
 	}
 
 	fputs( "</pre></code>\n", index );
-		}
-	}
 }
